@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     public float paddingY;
     public float timeBeforeUnreveal = 0.5f;
     public Material[] listMaterials; // liste brut des matérieux existants
-    private List<Material> potentialMaterials; // liste du nombre exacte de matériaux à distribuer (2 materiaux identiques)
+    private List<Material> potentialMaterials = new List<Material>(); // liste du nombre exacte de matériaux à distribuer (2 materiaux identiques)
     private List<TileBehaviour> tiles = new List<TileBehaviour>(); // liste de toutes les tuiles
     private List<TileBehaviour> tilesRevealed = new List<TileBehaviour>();
     private List<TileBehaviour> tilesMatched = new List<TileBehaviour>();
@@ -27,7 +27,6 @@ public class LevelManager : MonoBehaviour
             Debug.LogError("The Level need a even number of tiles", gameObject);
             return;
         }
-        potentialMaterials = new List<Material>();
         for(int i=0; i<listMaterials.Length; i++) // same liste que celle des materiaux , sauf qu'il possède tout 2x pour pouvoir l'appliquer sur les tuiles
         {
             potentialMaterials.Add(listMaterials[i]);// x1
@@ -80,7 +79,7 @@ public class LevelManager : MonoBehaviour
         GameObject actualTile = Instantiate(tilePrefab, position, Quaternion.identity); // 3d dans scene
         TileBehaviour tile = actualTile.GetComponent<TileBehaviour>();// recupération du behaviour
         tiles.Add(tile);// ajout dans la liste des tuiles
-        tile.manager = this; //affectation de la variable manager (de la tuile) de type level manager par ce script LevelManager
+        //tile.manager = this; //affectation de la variable manager (de la tuile) de type level manager par ce script LevelManager
 
         int index = Random.Range(0, potentialMaterials.Count); // random index parmis la liste des materiaux à doublon
         tile.hiddenMaterial = potentialMaterials[index]; // une fois le materiel attribué, 

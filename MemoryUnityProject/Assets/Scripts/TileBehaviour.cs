@@ -11,7 +11,7 @@ public class TileBehaviour : MonoBehaviour
 
     void Start()
     {
-        originalMaterial = GetComponent<Renderer>().material;
+        originalMaterial = GetComponent<Renderer>().materials[1];
         animator = GetComponent<Animator>();
     }
 
