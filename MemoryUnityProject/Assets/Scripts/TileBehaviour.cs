@@ -8,20 +8,22 @@ public class TileBehaviour : MonoBehaviour
     private Material originalMaterial; // couleur par défaut
     public LevelManager manager;
     private Animator animator;
+    [HideInInspector] public Material[] mats;
 
     void Start()
     {
         originalMaterial = GetComponent<Renderer>().materials[1];
         animator = GetComponent<Animator>();
+        mats = GetComponent<Renderer>().materials;
     }
 
     void OnMouseEnter()
     {
-        animator.SetBool("mouseOver", true);
+        animator.SetBool("MouseOver", true);
     }
     void OnMouseExit()
     {
-        animator.SetBool("mouseOver", false);
+        animator.SetBool("MouseOver", false);
     }
     void OnMouseUp()
     {
@@ -29,12 +31,14 @@ public class TileBehaviour : MonoBehaviour
     }
     public void RevealColor()
     {
-        GetComponent<Renderer>().materials[1] = hiddenMaterial; // monstre couleur
+        mats[1] = hiddenMaterial; // monstre couleur
+        GetComponent<Renderer>().materials = mats;
         animator.SetBool("TileSelected", true);// anime
     }
     public void UnrevealColor()
     {
-        GetComponent<Renderer>().materials[1] = originalMaterial;
+        mats[1] = originalMaterial;
+        GetComponent<Renderer>().materials = mats;
         animator.SetBool("TileSelected", false);
     }
 }

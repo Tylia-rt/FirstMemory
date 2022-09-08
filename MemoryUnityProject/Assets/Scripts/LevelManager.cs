@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
         {
             for (float x = 0; (x+0.01) < paddingX * column; x += paddingX)
             {
-                Vector3 position = new Vector3(x,y,0f); //positionner les tuiles en fonction de leur situation dans le tableau en liste et colonnes
+                Vector3 position = new Vector3(x,y,tilePrefab.transform.position.z); //positionner les tuiles en fonction de leur situation dans le tableau en liste et colonnes
                 CreateTile(position);
             }
         }
@@ -56,6 +56,7 @@ public class LevelManager : MonoBehaviour
     {
         if(tilesRevealed.Contains(tile)) return; // je ne peux pas me toucher moi meme car je suis deja dans la liste des objects sélectionnés
         if(tilesMatched.Contains(tile)) return; // je ne peux pas toucher un object déjà matché avec son jumeau
+        if(tilesRevealed.Count >= 2) return;
         tile.RevealColor(); // révèle couleur et anime la carte
         tilesRevealed.Add(tile);
 
@@ -76,10 +77,10 @@ public class LevelManager : MonoBehaviour
     }
     void CreateTile(Vector3 position)
     {
-        GameObject actualTile = Instantiate(tilePrefab, position, Quaternion.identity); // 3d dans scene
+        GameObject actualTile = Instantiate(tilePrefab, position, tilePrefab.transform.rotation); // 3d dans scene
         TileBehaviour tile = actualTile.GetComponent<TileBehaviour>();// recupération du behaviour
         tiles.Add(tile);// ajout dans la liste des tuiles
-        //tile.manager = this; //affectation de la variable manager (de la tuile) de type level manager par ce script LevelManager
+        tile.manager = this; //affectation de la variable manager (de la tuile) de type level manager par ce script LevelManager
 
         int index = Random.Range(0, potentialMaterials.Count); // random index parmis la liste des materiaux à doublon
         tile.hiddenMaterial = potentialMaterials[index]; // une fois le materiel attribué, 
