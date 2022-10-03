@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class LevelManager : MonoBehaviour
     public float paddingY;
     public float timeBeforeUnreveal = 0.5f;
     public Material[] listMaterials; // liste brut des matérieux existants
+    public TextMeshProUGUI attemptsText;
+    private int attemptsInt;
     private List<Material> potentialMaterials = new List<Material>(); // liste du nombre exacte de matériaux à distribuer (2 materiaux identiques)
     private List<TileBehaviour> tiles = new List<TileBehaviour>(); // liste de toutes les tuiles
     private List<TileBehaviour> tilesRevealed = new List<TileBehaviour>();
@@ -62,6 +66,8 @@ public class LevelManager : MonoBehaviour
 
         if(tilesRevealed.Count >= 2)
         {
+            attemptsInt += 1;
+            attemptsText.text = attemptsInt.ToString();
             if(tilesRevealed[0].hiddenMaterial == tilesRevealed[1].hiddenMaterial)
             {
                 Debug.Log("Same Color");
@@ -74,6 +80,11 @@ public class LevelManager : MonoBehaviour
                 StartCoroutine(UnRevealTiles());
             }
         }
+
+        if(tilesMatched.Count == tiles.Count)
+        {
+            Invoke("WinThenReturn", 3.0f);
+        }
     }
     void CreateTile(Vector3 position)
     {
@@ -85,5 +96,10 @@ public class LevelManager : MonoBehaviour
         int index = Random.Range(0, potentialMaterials.Count); // random index parmis la liste des materiaux à doublon
         tile.hiddenMaterial = potentialMaterials[index]; // une fois le materiel attribué, 
         potentialMaterials.RemoveAt(index);// le supprimer de la liste pour pas qu'il soit repris 
+    }
+
+    void WinThenReturn()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
     }
 }
