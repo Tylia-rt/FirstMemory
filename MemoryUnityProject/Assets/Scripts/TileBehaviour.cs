@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileBehaviour : MonoBehaviour
 {
+
     public Material hiddenMaterial;// la couleur véritable, cachée
     private Material originalMaterial; // couleur par défaut
     private Animator animator;

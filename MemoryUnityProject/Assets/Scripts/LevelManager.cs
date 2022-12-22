@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
+    public TextMeshProUGUI affichageEssais;
     public GameObject tilePrefab;
     public int line;
     public int column;
     public float paddingX;
     public float paddingY;
+    private int essais;
 //     public Material[] materials;
 //     private List<Material> potentialMaterials;
 //     private List<TileBehaviour> tiles = new List<TileBehaviour>();
@@ -20,6 +23,9 @@ public class LevelManager : MonoBehaviour
     {
         paddingX += 1.8f;
         paddingY += 2.8f;
+        essais = 0;
+        affichageEssais.text = essais.ToString();
+    
 
 //         if(line * column % 2 != 0)
 //         {
@@ -55,6 +61,8 @@ public class LevelManager : MonoBehaviour
 
 //         if(tilesRevealed.Count >= 2)
 //         {
+//             essais +=1;
+//             affichageEssais.text = essais.ToString();
 //             if(tilesRevealed[0].hiddenMaterial == tilesRevealed[1].hiddenMaterial)
 //             {
 //                 Debug.Log("Same Color");
